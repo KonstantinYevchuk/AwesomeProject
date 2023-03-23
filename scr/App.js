@@ -1,8 +1,17 @@
 // import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, ImageBackground, View, TouchableWithoutFeedback, 
+
+import { 
+  StyleSheet, 
+  ImageBackground, 
+  View, 
+  TouchableWithoutFeedback, 
   Keyboard } from 'react-native';
+
 import RegistrationScreen from './Screens/RegistrationScreen/RegistrationScreen';
 import LoginScreen from './Screens/LoginScreen/LoginScreen';
+
+
+
 
 export default function App() {
   return (

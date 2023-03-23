@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import * as Font from 'expo-font';
 import { Text,
   View, 
   TextInput, 
@@ -13,10 +14,22 @@ import { Text,
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isReady, setIsReady] = useState(false);
 
   const handleInputEmail = (text) => setEmail(text);
   const handleInputPassword = (text) => setPassword(text);
   // const Separator = () => <View style={styles.separator} />;
+
+  useEffect(() => {
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        "Roboto-Regular": require("../../../assets/fonts/Roboto-Regular.ttf"),
+        "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
+      });
+      setIsReady(true)
+    };
+    loadFonts()
+  }, []);
 
   const onRegistration = () => {
     if(email === '' || password === '') {
@@ -25,6 +38,9 @@ const LoginScreen = () => {
     }
     Keyboard.dismiss();
     Alert.alert("You are log in:", `Email:${email} Password:${password}`);
+  }
+  if (!isReady) {
+    return null;
   }
   return (
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
@@ -63,6 +79,8 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   containerLog: {
+    fontFamily: "Roboto-Regular",
+    fontSize: 16,
     flex: 0.4,
     justifyContent: 'center',
     alignItems: 'center',
@@ -118,6 +136,8 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: 10,
     textAlign: 'center',
+    fontFamily: "Roboto-Bold",
+    fontSize: 30,
   },
 });
 export default LoginScreen

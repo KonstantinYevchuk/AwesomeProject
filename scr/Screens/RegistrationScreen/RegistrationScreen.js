@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import * as Font from 'expo-font';
+// import { AppLoading } from 'expo';
+// import { useFonts } from 'expo-font';
 import { Text,
   View, 
   TextInput, 
@@ -10,29 +13,49 @@ import { Text,
   TouchableWithoutFeedback, 
   Keyboard } from "react-native";
 
+  
+
 const RegistrationScreen = () => {
     const [login, setLogin] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isShowKeyboard, setIsShowKeyboard] = useState(null);
-
+    const [isReady, setIsReady] = useState(false)
+    // const [isShowKeyboard, setIsShowKeyboard] = useState(null);
+    // const [fontsLoaded] = useFonts({
+    //   "Roboto-Regular": require("../../../assets/fonts/Roboto-Regular.ttf"),
+    //   "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
+    // });
+  
     const handleInputLogin = (text) => setLogin(text);
     const handleInputEmail = (text) => setEmail(text);
     const handleInputPassword = (text) => setPassword(text);
     // const Separator = () => <View style={styles.separator} />;
-
+    
+    useEffect(() => {
+      const loadFonts = async () => {
+        await Font.loadAsync({
+          "Roboto-Regular": require("../../../assets/fonts/Roboto-Regular.ttf"),
+          "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
+        });
+        setIsReady(true)
+      };
+      loadFonts()
+    }, [])
     const onRegistration = () => {
       if(login === '' || email === '' || password === '') {
         Alert.alert("Please, fill all fields")
         return
       }
       Keyboard.dismiss();
-      setIsShowKeyboard(false)
+      // setIsShowKeyboard(false)
       Alert.alert("Registration is done:", 
           `${login} 
           ${email} 
           ${password}`);
     }
+    if (!isReady) {
+    return null;
+  }
     return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
             <View style={styles.containerReg}>
@@ -43,7 +66,7 @@ const RegistrationScreen = () => {
             placeholder="Login"
             value={login}
             onChangeText={handleInputLogin}
-            onFocus={() => setIsShowKeyboard(true)}
+            // onFocus={() => setIsShowKeyboard(true)}
             style={styles.input}
             />
             <TextInput
@@ -52,7 +75,7 @@ const RegistrationScreen = () => {
             onChangeText={handleInputEmail}
             placeholder="Email"
             style={styles.input}
-            onFocus={() => setIsShowKeyboard(true)}
+            // onFocus={() => setIsShowKeyboard(true)}
           />
             <TextInput
             value={password}
@@ -60,7 +83,7 @@ const RegistrationScreen = () => {
             placeholder="Password"
             secureTextEntry={true}
             style={styles.input}
-            onFocus={() => setIsShowKeyboard(true)}
+            // onFocus={() => setIsShowKeyboard(true)}
           />
           
           <TouchableOpacity
@@ -80,6 +103,8 @@ const RegistrationScreen = () => {
 
 const styles = StyleSheet.create({
     containerReg: {
+      fontFamily: "Roboto-Regular",
+      fontSize: 16,
       // flex: 0.4,
       // justifyContent: 'center',
       // alignItems: 'center',
@@ -133,6 +158,8 @@ const styles = StyleSheet.create({
     title: {
       marginBottom: 32,
       textAlign: 'center',
+      fontFamily: "Roboto-Bold",
+      fontSize: 30,
     },
   });
 

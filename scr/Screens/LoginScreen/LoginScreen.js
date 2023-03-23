@@ -9,27 +9,41 @@ import { Text,
   Platform, 
   TouchableOpacity,
   TouchableWithoutFeedback, 
-  Keyboard } from "react-native";
+  Keyboard,
+  Dimensions } from "react-native";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isReady, setIsReady] = useState(false);
+  const [dimensions, setDimensions] = useState(
+    Dimensions.get("window").width - 20 * 2
+  );
 
   const handleInputEmail = (text) => setEmail(text);
   const handleInputPassword = (text) => setPassword(text);
-  // const Separator = () => <View style={styles.separator} />;
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      "Roboto-Regular": require("../../../assets/fonts/Roboto-Regular.ttf"),
+      "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
+    });
+    setIsReady(true)
+  };
+  loadFonts();
 
   useEffect(() => {
-    const loadFonts = async () => {
-      await Font.loadAsync({
-        "Roboto-Regular": require("../../../assets/fonts/Roboto-Regular.ttf"),
-        "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
-      });
-      setIsReady(true)
+    const onChange = () => {
+      const width = Dimensions.get("window").width - 20 * 2;
+      
+      setDimensions(width);
     };
-    loadFonts()
-  }, []);
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
+    
+  }, [])
 
   const onRegistration = () => {
     if(email === '' || password === '') {
@@ -46,7 +60,10 @@ const LoginScreen = () => {
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
           <View style={styles.containerLog}>
           <Text style={styles.title}>Enter your account</Text>
-          <View style={styles.form}>
+          <View style={{
+                ...styles.form,
+                width: dimensions,
+              }}>
           <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
           <TextInput
           keyboardType="email-address"
@@ -81,20 +98,13 @@ const styles = StyleSheet.create({
   containerLog: {
     fontFamily: "Roboto-Regular",
     fontSize: 16,
-    flex: 0.4,
-    justifyContent: 'center',
-    alignItems: 'center',
     paddingTop: 92,
-    paddingLeft: 16,
-    paddingRight: 16,
     paddingBottom: 45,
     backgroundColor: '#FFFFFF',
     borderRadius: 25,
   },
   form: {
-    paddingTop: 32,
-    paddingLeft: 16,
-    paddingRight: 16,
+    marginHorizontal: 16,
     paddingBottom: 32,
   },
   input: {
@@ -134,7 +144,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   title: {
-    marginBottom: 10,
+    marginBottom: 20,
     textAlign: 'center',
     fontFamily: "Roboto-Bold",
     fontSize: 30,

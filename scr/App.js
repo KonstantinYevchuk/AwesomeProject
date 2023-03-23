@@ -18,8 +18,8 @@ export default function App() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
       <ImageBackground source={require('../assets/images/back.jpg')} style={styles.img}>
-      <RegistrationScreen />
-      {/* <LoginScreen /> */}
+      {/* <RegistrationScreen /> */}
+      <LoginScreen />
       </ImageBackground>
     </View>
    </TouchableWithoutFeedback>

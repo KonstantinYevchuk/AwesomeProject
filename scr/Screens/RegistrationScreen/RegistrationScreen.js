@@ -11,7 +11,8 @@ import { Text,
   Platform, 
   TouchableOpacity,
   TouchableWithoutFeedback, 
-  Keyboard } from "react-native";
+  Keyboard,
+  Dimensions } from "react-native";
 
   
 
@@ -29,7 +30,9 @@ const RegistrationScreen = () => {
     const handleInputLogin = (text) => setLogin(text);
     const handleInputEmail = (text) => setEmail(text);
     const handleInputPassword = (text) => setPassword(text);
-    // const Separator = () => <View style={styles.separator} />;
+    const [dimensions, setDimensions] = useState(
+      Dimensions.get("window").width - 20 * 2
+    );
     
     useEffect(() => {
       const loadFonts = async () => {
@@ -40,6 +43,15 @@ const RegistrationScreen = () => {
         setIsReady(true)
       };
       loadFonts()
+      const onChange = () => {
+        const width = Dimensions.get("window").width - 20 * 2;
+        
+        setDimensions(width);
+      };
+      Dimensions.addEventListener("change", onChange);
+      return () => {
+        Dimensions.removeEventListener("change", onChange);
+      };
     }, [])
     const onRegistration = () => {
       if(login === '' || email === '' || password === '') {
@@ -60,7 +72,10 @@ const RegistrationScreen = () => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
             <View style={styles.containerReg}>
             <Text style={styles.title}>Registration</Text>
-            <View style={styles.form}>
+            <View style={{
+                ...styles.form,
+                width: dimensions,
+              }}>
             <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
             <TextInput 
             placeholder="Login"
@@ -105,12 +120,7 @@ const styles = StyleSheet.create({
     containerReg: {
       fontFamily: "Roboto-Regular",
       fontSize: 16,
-      // flex: 0.4,
-      // justifyContent: 'center',
-      // alignItems: 'center',
       paddingTop: 92,
-      paddingLeft: 16,
-      paddingRight: 16,
       paddingBottom: 45,
       backgroundColor: '#FFFFFF',
       borderRadius: 25,

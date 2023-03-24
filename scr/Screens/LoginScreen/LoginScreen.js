@@ -12,46 +12,51 @@ import { Text,
   Keyboard,
   Dimensions } from "react-native";
 
+  const initialState = {
+    email: "",
+    password: "",
+  };
+
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  const [state, setState] = useState(initialState);
   const [isReady, setIsReady] = useState(false);
   const [dimensions, setDimensions] = useState(
     Dimensions.get("window").width - 20 * 2
   );
-
-  const handleInputEmail = (text) => setEmail(text);
-  const handleInputPassword = (text) => setPassword(text);
-
-  const loadFonts = async () => {
-    await Font.loadAsync({
-      "Roboto-Regular": require("../../../assets/fonts/Roboto-Regular.ttf"),
-      "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
-    });
-    setIsReady(true)
-  };
-  loadFonts();
+  // const handleInputEmail = (text) => setEmail(text);
+  // const handleInputPassword = (text) => setPassword(text);
 
   useEffect(() => {
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        "Roboto-Regular": require("../../../assets/fonts/Roboto-Regular.ttf"),
+        "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
+      });
+      setIsReady(true)
+    };
+    loadFonts();
+
     const onChange = () => {
       const width = Dimensions.get("window").width - 20 * 2;
-      
       setDimensions(width);
     };
     Dimensions.addEventListener("change", onChange);
     return () => {
       Dimensions.removeEventListener("change", onChange);
     };
-    
+     
   }, [])
 
   const onRegistration = () => {
-    if(email === '' || password === '') {
+    if(state.email === '' || state.password === '') {
       Alert.alert("Please, fill all fields")
       return
     }
     Keyboard.dismiss();
-    Alert.alert("You are log in:", `Email:${email} Password:${password}`);
+    Alert.alert("You are log in:", `Email:${state.email} Password:${state.password}`);
+    setState(initialState);
   }
   if (!isReady) {
     return null;
@@ -60,21 +65,22 @@ const LoginScreen = () => {
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
           <View style={styles.containerLog}>
           <Text style={styles.title}>Enter your account</Text>
-          <View style={{
-                ...styles.form,
-                width: dimensions,
-              }}>
+          <View style={{...styles.form, width: dimensions}}>
           <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
           <TextInput
           keyboardType="email-address"
-          value={email}
-          onChangeText={handleInputEmail}
+          value={state.email}
+          onChangeText={(value) =>
+            setState((prevState) => ({ ...prevState, email: value }))
+          }
           placeholder="Email"
           style={styles.input}
         />
           <TextInput
-          value={password}
-          onChangeText={handleInputPassword}
+          value={state.password}
+          onChangeText={(value) =>
+            setState((prevState) => ({ ...prevState, password: value }))
+          }
           placeholder="Password"
           secureTextEntry={true}
           style={styles.input}
@@ -151,3 +157,5 @@ const styles = StyleSheet.create({
   },
 });
 export default LoginScreen
+
+

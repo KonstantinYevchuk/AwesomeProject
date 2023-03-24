@@ -37,7 +37,7 @@ const RegistrationScreen = () => {
     useEffect(() => {
       const loadFonts = async () => {
         await Font.loadAsync({
-          "Roboto-Regular": require("../../../assets/fonts/Roboto-Regular.ttf"),
+          "Roboto-Regular": require("../../../assets/fonts/Roboto-Bold.ttf"),
           "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
         });
         setIsReady(true)

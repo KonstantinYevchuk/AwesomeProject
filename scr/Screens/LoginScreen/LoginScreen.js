@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import * as Font from 'expo-font';
 import { Text,
   View, 
   TextInput, 
   Alert,
   StyleSheet, 
+  ImageBackground,
   KeyboardAvoidingView, 
   Platform, 
   TouchableOpacity,
@@ -16,12 +16,13 @@ import { Text,
     email: "",
     password: "",
   };
+  
 
 const LoginScreen = () => {
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
   const [state, setState] = useState(initialState);
-  const [isReady, setIsReady] = useState(false);
+  // const [isReady, setIsReady] = useState(false);
   const [dimensions, setDimensions] = useState(
     Dimensions.get("window").width - 20 * 2
   );
@@ -29,15 +30,7 @@ const LoginScreen = () => {
   // const handleInputPassword = (text) => setPassword(text);
 
   useEffect(() => {
-    const loadFonts = async () => {
-      await Font.loadAsync({
-        "Roboto-Regular": require("../../../assets/fonts/Roboto-Regular.ttf"),
-        "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
-      });
-      setIsReady(true)
-    };
-    loadFonts();
-
+   
     const onChange = () => {
       const width = Dimensions.get("window").width - 20 * 2;
       setDimensions(width);
@@ -46,7 +39,6 @@ const LoginScreen = () => {
     return () => {
       Dimensions.removeEventListener("change", onChange);
     };
-     
   }, [])
 
   const onRegistration = () => {
@@ -58,12 +50,13 @@ const LoginScreen = () => {
     Alert.alert("You are log in:", `Email:${state.email} Password:${state.password}`);
     setState(initialState);
   }
-  if (!isReady) {
-    return null;
-  }
+
   return (
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
-          <View style={styles.containerLog}>
+          <View style={styles.container}>
+            <ImageBackground source={require('../../../assets/images/back.jpg')} style={styles.img}>
+            <View style={styles.containerLog}>
+            
           <Text style={styles.title}>Enter your account</Text>
           <View style={{...styles.form, width: dimensions}}>
           <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
@@ -95,12 +88,18 @@ const LoginScreen = () => {
               </TouchableOpacity>
           </KeyboardAvoidingView>   
           </View>
+          <Text style={styles.text}>Have you got an account? Enter</Text> 
           </View>
+          </ImageBackground>
+            </View>
           </TouchableWithoutFeedback>
   )
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   containerLog: {
     fontFamily: "Roboto-Regular",
     fontSize: 16,
@@ -108,6 +107,11 @@ const styles = StyleSheet.create({
     paddingBottom: 45,
     backgroundColor: '#FFFFFF',
     borderRadius: 25,
+  },
+  img: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'flex-end',
   },
   form: {
     marginHorizontal: 16,
@@ -131,12 +135,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 40,
     marginTop: 40,
+    marginBottom: 16,
     justifyContent: "center",
     alignItems: "center",
     marginHorizontal: 10,
     ...Platform.select({
       ios: {
-        backgroundColor: "transparent",
+        backgroundColor: "#FF6C00", 
         borderColor: "#f0f8ff",
       },
       android: {
@@ -155,6 +160,9 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Bold",
     fontSize: 30,
   },
+  text: {
+    textAlign: 'center',
+  }
 });
 export default LoginScreen
 

@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import * as Font from 'expo-font';
-// import { AppLoading } from 'expo';
-// import { useFonts } from 'expo-font';
+
 import { Text,
   View, 
   TextInput, 
   Alert,
-  StyleSheet, 
+  StyleSheet,
+  ImageBackground, 
   KeyboardAvoidingView, 
   Platform, 
   TouchableOpacity,
@@ -14,13 +13,15 @@ import { Text,
   Keyboard,
   Dimensions } from "react-native";
 
-  
+  // const windowDimensions = Dimensions.get('window');
+  // const screenDimensions = Dimensions.get('screen'); 
 
 const RegistrationScreen = () => {
     const [login, setLogin] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isReady, setIsReady] = useState(false)
+    
+    // const [isReady, setIsReady] = useState(false)
     // const [isShowKeyboard, setIsShowKeyboard] = useState(null);
     // const [fontsLoaded] = useFonts({
     //   "Roboto-Regular": require("../../../assets/fonts/Roboto-Regular.ttf"),
@@ -35,14 +36,14 @@ const RegistrationScreen = () => {
     );
     
     useEffect(() => {
-      const loadFonts = async () => {
-        await Font.loadAsync({
-          "Roboto-Regular": require("../../../assets/fonts/Roboto-Bold.ttf"),
-          "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
-        });
-        setIsReady(true)
-      };
-      loadFonts()
+      // const loadFonts = async () => {
+      //   await Font.loadAsync({
+      //     "Roboto-Regular": require("../../../assets/fonts/Roboto-Bold.ttf"),
+      //     "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
+      //   });
+      //   setIsReady(true)
+      // };
+      // loadFonts()
       const onChange = () => {
         const width = Dimensions.get("window").width - 20 * 2;
         
@@ -65,11 +66,13 @@ const RegistrationScreen = () => {
           ${email} 
           ${password}`);
     }
-    if (!isReady) {
-    return null;
-  }
+  //   if (!isReady) {
+  //   return null;
+  // }
     return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
+            <View style={styles.container}>
+            <ImageBackground source={require('../../../assets/images/back.jpg')} style={styles.img}>
             <View style={styles.containerReg}>
             <Text style={styles.title}>Registration</Text>
             <View style={{
@@ -110,17 +113,28 @@ const RegistrationScreen = () => {
               </TouchableOpacity>
           </KeyboardAvoidingView>   
           </View>
-           
+          <Text style={styles.text}>Have you got an account? Enter</Text> 
+          </View>
+          </ImageBackground>
             </View>
+    
             </TouchableWithoutFeedback>
     )
 };
 
 const styles = StyleSheet.create({
+    container: {
+      flex: 1
+    },
+    img: {
+      flex: 1,
+      resizeMode: 'cover',
+      justifyContent: 'flex-end',
+    },
     containerReg: {
       fontFamily: "Roboto-Regular",
       fontSize: 16,
-      paddingTop: 92,
+      paddingTop: 80,
       paddingBottom: 45,
       backgroundColor: '#FFFFFF',
       borderRadius: 25,
@@ -136,7 +150,7 @@ const styles = StyleSheet.create({
       paddingBottom: 5,
       paddingLeft: 20,
       paddingRight: 20,
-      width: 340,
+      minWidth: 340,
       marginBottom: 10,
       borderWidth: 1,
       borderColor: "#E8E8E8",
@@ -147,6 +161,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       height: 40,
       marginTop: 40,
+      marginBottom: 16,
       justifyContent: "center",
       alignItems: "center",
       marginHorizontal: 10,
@@ -171,6 +186,9 @@ const styles = StyleSheet.create({
       fontFamily: "Roboto-Bold",
       fontSize: 30,
     },
+    text: {
+      textAlign: 'center',
+    }
   });
 
  

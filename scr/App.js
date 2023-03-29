@@ -5,15 +5,12 @@ import * as Font from "expo-font";
 import AppLoading from 'expo-app-loading';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { 
-  StyleSheet, 
-  ImageBackground, 
-  View, 
-  TouchableWithoutFeedback, 
-  Keyboard } from 'react-native';
+// import { TouchableOpacity, Text } from 'react-native';
+
 
 import RegistrationScreen from './Screens/RegistrationScreen/RegistrationScreen';
 import LoginScreen from './Screens/LoginScreen/LoginScreen';
+import HomeScreen from './Screens/HomeScreen/HomeScreen';
 
 
 
@@ -40,7 +37,14 @@ export default function App() {
   }
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen 
+        options={{
+          headerShown: false
+        }}
+        name="Login" 
+        component={LoginScreen} 
+        />
         <Stack.Screen 
         options={{
           headerShown: false
@@ -48,12 +52,12 @@ export default function App() {
         name="Registration" 
         component={RegistrationScreen} 
         />
-        <Stack.Screen 
+        <Stack.Screen
         options={{
           headerShown: false
         }}
-        name="Login" 
-        component={LoginScreen} 
+        name="Home" 
+        component={HomeScreen} 
         />
       </Stack.Navigator>
     </NavigationContainer>

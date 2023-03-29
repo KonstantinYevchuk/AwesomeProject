@@ -13,14 +13,20 @@ import { Text,
   Keyboard,
   Dimensions } from "react-native";
 
-  // const windowDimensions = Dimensions.get('window');
-  // const screenDimensions = Dimensions.get('screen'); 
+  const initialState = {
+    login: "",
+    email: "",
+    password: "",
+  };
 
-const RegistrationScreen = () => {
-    const [login, setLogin] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    
+const RegistrationScreen = ({navigation}) => {
+    // const [login, setLogin] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
+    const [state, setState] = useState(initialState); 
+     const [dimensions, setDimensions] = useState(
+      Dimensions.get("window").width - 20 * 2
+    );   
     // const [isReady, setIsReady] = useState(false)
     // const [isShowKeyboard, setIsShowKeyboard] = useState(null);
     // const [fontsLoaded] = useFonts({
@@ -28,12 +34,10 @@ const RegistrationScreen = () => {
     //   "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
     // });
   
-    const handleInputLogin = (text) => setLogin(text);
-    const handleInputEmail = (text) => setEmail(text);
-    const handleInputPassword = (text) => setPassword(text);
-    const [dimensions, setDimensions] = useState(
-      Dimensions.get("window").width - 20 * 2
-    );
+    // const handleInputLogin = (text) => setLogin(text);
+    // const handleInputEmail = (text) => setEmail(text);
+    // const handleInputPassword = (text) => setPassword(text);
+   
     
     useEffect(() => {
       // const loadFonts = async () => {
@@ -55,20 +59,22 @@ const RegistrationScreen = () => {
       };
     }, [])
     const onRegistration = () => {
+      const { login, email, password } = state;
       if(login === '' || email === '' || password === '') {
         Alert.alert("Please, fill all fields")
         return
       }
       Keyboard.dismiss();
+      navigation.navigate('Home')
+      setState(initialState);
       // setIsShowKeyboard(false)
-      Alert.alert("Registration is done:", 
-          `${login} 
-          ${email} 
-          ${password}`);
+      // Alert.alert("Registration is done:", 
+      //     `${login} 
+      //     ${email} 
+      //     ${password}`);
     }
-  //   if (!isReady) {
-  //   return null;
-  // }
+ 
+  const { login, email, password } = state;
     return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
             <View style={styles.container}>
@@ -83,21 +89,27 @@ const RegistrationScreen = () => {
             <TextInput 
             placeholder="Login"
             value={login}
-            onChangeText={handleInputLogin}
+            onChangeText={(value) =>
+              setState((prevState) => ({ ...prevState, login: value }))
+            }
             // onFocus={() => setIsShowKeyboard(true)}
             style={styles.input}
             />
             <TextInput
             keyboardType="email-address"
             value={email}
-            onChangeText={handleInputEmail}
+            onChangeText={(value) =>
+              setState((prevState) => ({ ...prevState, email: value }))
+            }
             placeholder="Email"
             style={styles.input}
             // onFocus={() => setIsShowKeyboard(true)}
           />
             <TextInput
             value={password}
-            onChangeText={handleInputPassword}
+            onChangeText={(value) =>
+              setState((prevState) => ({ ...prevState, password: value }))
+            }
             placeholder="Password"
             secureTextEntry={true}
             style={styles.input}
@@ -113,7 +125,20 @@ const RegistrationScreen = () => {
               </TouchableOpacity>
           </KeyboardAvoidingView>   
           </View>
-          <Text style={styles.text}>Have you got an account? Enter</Text> 
+          <View style={styles.navigateContainer}>
+              <Text style={styles.text}>
+            You have not got an account? 
+              </Text>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('Login')}
+              >
+              <Text 
+              style={styles.btnNavigateTitle}
+              >Log in
+              </Text>
+              </TouchableOpacity>
+            </View>   
           </View>
           </ImageBackground>
             </View>
@@ -137,7 +162,7 @@ const styles = StyleSheet.create({
       paddingTop: 80,
       paddingBottom: 45,
       backgroundColor: '#FFFFFF',
-      borderRadius: 25,
+      borderTopRadius: 25,
     },
     form: {
       marginHorizontal: 16,
@@ -188,6 +213,15 @@ const styles = StyleSheet.create({
     },
     text: {
       textAlign: 'center',
+      marginRight: 10,
+    },
+    navigateContainer: {
+      justifyContent: "center",
+      alignItems: "center", 
+      flexDirection: "row"
+    },
+    btnNavigateTitle: {
+      fontFamily: "Roboto-Bold"
     }
   });
 

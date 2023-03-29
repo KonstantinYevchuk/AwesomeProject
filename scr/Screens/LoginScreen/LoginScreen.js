@@ -18,7 +18,7 @@ import { Text,
   };
   
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
   const [state, setState] = useState(initialState);
@@ -28,7 +28,7 @@ const LoginScreen = () => {
   );
   // const handleInputEmail = (text) => setEmail(text);
   // const handleInputPassword = (text) => setPassword(text);
-
+  const { email, password } = state;
   useEffect(() => {
    
     const onChange = () => {
@@ -42,12 +42,18 @@ const LoginScreen = () => {
   }, [])
 
   const onRegistration = () => {
-    if(state.email === '' || state.password === '') {
+    if(email === '' || password === '') {
       Alert.alert("Please, fill all fields")
       return
     }
     Keyboard.dismiss();
-    Alert.alert("You are log in:", `Email:${state.email} Password:${state.password}`);
+    navigation.navigate('Home', {
+      screen: 'PostsScreen',
+      params: {email: email,password: password,}   
+    }
+   
+    )
+    // Alert.alert("You are log in:", `Email:${email} Password:${password}`);
     setState(initialState);
   }
 
@@ -62,7 +68,7 @@ const LoginScreen = () => {
           <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
           <TextInput
           keyboardType="email-address"
-          value={state.email}
+          value={email}
           onChangeText={(value) =>
             setState((prevState) => ({ ...prevState, email: value }))
           }
@@ -70,7 +76,7 @@ const LoginScreen = () => {
           style={styles.input}
         />
           <TextInput
-          value={state.password}
+          value={password}
           onChangeText={(value) =>
             setState((prevState) => ({ ...prevState, password: value }))
           }
@@ -88,7 +94,21 @@ const LoginScreen = () => {
               </TouchableOpacity>
           </KeyboardAvoidingView>   
           </View>
-          <Text style={styles.text}>Have you got an account? Enter</Text> 
+            <View style={styles.navigateContainer}>
+              <Text style={styles.text}>
+            You have not got an account? 
+              </Text>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('Registration')}
+              >
+              <Text 
+              style={styles.btnNavigateTitle}
+              >Sign in
+              </Text>
+              </TouchableOpacity>
+            </View>  
+          
           </View>
           </ImageBackground>
             </View>
@@ -106,7 +126,7 @@ const styles = StyleSheet.create({
     paddingTop: 92,
     paddingBottom: 45,
     backgroundColor: '#FFFFFF',
-    borderRadius: 25,
+    borderTopRadius: 25,
   },
   img: {
     flex: 1,
@@ -161,7 +181,16 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   text: {
-    textAlign: 'center',
+    textAlign: 'center', 
+    marginRight: 10
+  },
+  navigateContainer: {
+    justifyContent: "center",
+    alignItems: "center", 
+    flexDirection: "row"
+  },
+  btnNavigateTitle: {
+    fontFamily: "Roboto-Bold"
   }
 });
 export default LoginScreen

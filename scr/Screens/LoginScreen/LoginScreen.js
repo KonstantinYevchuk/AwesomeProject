@@ -48,7 +48,7 @@ const LoginScreen = ({navigation}) => {
     }
     Keyboard.dismiss();
     navigation.navigate('Home', {
-      screen: 'PostsScreen',
+      screen: 'Posts Screen',
       params: {email: email,password: password,}   
     }
    

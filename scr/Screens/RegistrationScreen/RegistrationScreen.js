@@ -65,7 +65,12 @@ const RegistrationScreen = ({navigation}) => {
         return
       }
       Keyboard.dismiss();
-      navigation.navigate('Home')
+      navigation.navigate('Home', {
+        screen: 'Posts Screen',
+        params: {email: email,password: password,}   
+      }
+     
+      )
       setState(initialState);
       // setIsShowKeyboard(false)
       // Alert.alert("Registration is done:", 

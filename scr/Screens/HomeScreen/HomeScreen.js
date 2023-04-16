@@ -3,7 +3,7 @@ import PostsScreen from "../PostsScreen/PostsScreen";
 import CreatePostsScreen from "../CreatePostsScreen/CreatePostsScreen";
 import ProfileScreen from "../ProfileScreen/ProfileScreen";
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+// import { NavigationContainer } from '@react-navigation/native';
 import { Button, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -33,6 +33,7 @@ const HomeScreen = () => {
     tabBarOptions={{
       activeTintColor: "tomato",
       inactiveTintColor: "gray",
+      showLabel: false,
     }}>
       <Tabs.Screen 
       name="Posts Screen" 

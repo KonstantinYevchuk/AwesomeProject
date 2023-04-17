@@ -1,10 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
 
 
 const Tabs = createBottomTabNavigator();
-
 
 const PostsScreen = ({ navigation, route }) => {
     const { email, password } = route.params;

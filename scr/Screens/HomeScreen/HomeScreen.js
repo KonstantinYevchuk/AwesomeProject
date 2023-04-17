@@ -4,37 +4,31 @@ import CreatePostsScreen from "../CreatePostsScreen/CreatePostsScreen";
 import ProfileScreen from "../ProfileScreen/ProfileScreen";
 import { createStackNavigator } from '@react-navigation/stack';
 // import { NavigationContainer } from '@react-navigation/native';
-import { Button, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
+// import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+
 
 const Tabs = createBottomTabNavigator();
 
 
 const StackHome = createStackNavigator();
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <Tabs.Navigator
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
-        if (route.name === "Profile Screen") {
-          iconName = focused ? "ios-list-box" : "ios-list";
-          } else if (route.name === "Posts Screen") {
-            return <AntDesign name="plus" size={24} color="black" />;
-          } else if (route.name === "Create Screen") {
-            iconName = focused ? "ios-list-box" : "ios-list";
-          }
-        
-        return <Ionicons name={iconName} size={size} color={color} />;
-      },
-    })}
     tabBarOptions={{
-      activeTintColor: "tomato",
-      inactiveTintColor: "gray",
+      activeTintColor: "#FF6C00",
+      inactiveTintColor: "#212121CC",
       showLabel: false,
     }}>
+      <Tabs.Screen 
+      name="Create Screen" 
+      component={CreatePostsScreen}
+      options={{
+        tabBarIcon: ({focused, size, color}) => <Feather name="grid" size={size} color={color} />
+      }} />
       <Tabs.Screen 
       name="Posts Screen" 
       component={PostsScreen}
@@ -50,20 +44,24 @@ const HomeScreen = () => {
               fontSize: 20,
               // textAlign: "center",
             },
+            tabBarIcon: ({focused, size, color}) => <AntDesign name="plus" size={size} color={color} />,
             headerRight: () => (
               <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.btnLogOut}
-                    // onPress={onRegistration}
+                    onPress={() => navigation.navigate('Login')}
                   >
-              <Text style={styles.btnTitleLogOut}>LOG OUT</Text>
+                  <Text style={styles.btnTitleLogOut}><Feather name="log-out" size={24} color="#212121CC" /></Text>
                   </TouchableOpacity>
-              
             ),
           }} 
       />
-      <Tabs.Screen name="Profile Screen" component={ProfileScreen} />
-      <Tabs.Screen name="Create Screen" component={CreatePostsScreen} />
+      <Tabs.Screen 
+      name="Profile Screen" 
+      component={ProfileScreen}
+      options={{
+        tabBarIcon: ({focused, size, color}) => <Feather name="user" size={size} color={color} />
+      }} />
     </Tabs.Navigator>
    
   );
@@ -85,15 +83,20 @@ export default HomeScreen;
 
 
 
-// if (route.name === "Profile Screen") {
-        //   iconName = focused
-        //     ? "ios-information-circle"
-        //     : "ios-information-circle-outline";
-        // } else if (route.name === "Posts Screen") {
-        //   iconName = focused ? "ios-list-box" : "ios-list";
-        // } else if (route.name === "Create Screen") {
-        //   iconName = focused ? "ios-list-box" : "ios-list";
-        // }
+ // screenOptions={({ route }) => ({
+    //   tabBarIcon: ({ focused, color, size }) => {
+    //     let iconName;
+    //     if (route.name === "Profile Screen") {
+    //       iconName = focused ? "ios-list-box" : "ios-list";
+    //       } else if (route.name === "Posts Screen") {
+    //         return <AntDesign name="plus" size={24} color="black" />;
+    //       } else if (route.name === "Create Screen") {
+    //         iconName = focused ? "ios-list-box" : "ios-list";
+    //       }
+        
+    //     return <Ionicons name={iconName} size={size} color={color} />;
+    //   },
+    // })}
 
 
 

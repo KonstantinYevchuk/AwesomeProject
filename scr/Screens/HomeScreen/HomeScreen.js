@@ -19,7 +19,7 @@ const HomeScreen = ({navigation}) => {
   return (
     <Tabs.Navigator
     tabBarOptions={{
-      activeTintColor: "#FF6C00",
+      activeTintColor: "#FFFFFF",
       inactiveTintColor: "#212121CC",
       showLabel: false,
     }}>
@@ -27,7 +27,11 @@ const HomeScreen = ({navigation}) => {
       name="Create Screen" 
       component={CreatePostsScreen}
       options={{
-        tabBarIcon: ({focused, size, color}) => <Feather name="grid" size={size} color={color} />
+        tabBarIcon: ({focused, size, color}) => <Feather name="grid" size={size} color={color} />,
+        tabBarActiveBackgroundColor: "#FF6C00",
+        tabBarItemStyle: {
+          borderRadius: 50,  
+        },
       }} />
       <Tabs.Screen 
       name="Posts Screen" 
@@ -45,6 +49,10 @@ const HomeScreen = ({navigation}) => {
               // textAlign: "center",
             },
             tabBarIcon: ({focused, size, color}) => <AntDesign name="plus" size={size} color={color} />,
+            tabBarActiveBackgroundColor: "#FF6C00",
+            tabBarItemStyle: {
+              borderRadius: 50,  
+            },
             headerRight: () => (
               <TouchableOpacity
                     activeOpacity={0.8}
@@ -60,7 +68,11 @@ const HomeScreen = ({navigation}) => {
       name="Profile Screen" 
       component={ProfileScreen}
       options={{
-        tabBarIcon: ({focused, size, color}) => <Feather name="user" size={size} color={color} />
+        tabBarIcon: ({focused, size, color}) => <Feather name="user" size={size} color={color} />,
+        tabBarActiveBackgroundColor: "#FF6C00",
+        tabBarItemStyle: {
+          borderRadius: 50,  
+        }
       }} />
     </Tabs.Navigator>
    

@@ -167,7 +167,8 @@ const styles = StyleSheet.create({
       paddingTop: 80,
       paddingBottom: 45,
       backgroundColor: '#FFFFFF',
-      borderTopRadius: 25,
+      borderTopLeftRadius: 25,
+      borderTopRightRadius: 25,
     },
     form: {
       marginHorizontal: 16,

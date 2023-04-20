@@ -1,17 +1,14 @@
 import 'react-native-gesture-handler';
 import { useState } from "react";
-// import { StatusBar } from 'expo-status-bar';
+
 import * as Font from "expo-font";
 import AppLoading from 'expo-app-loading';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-// import { TouchableOpacity, Text } from 'react-native';
-
 
 import RegistrationScreen from './Screens/RegistrationScreen/RegistrationScreen';
 import LoginScreen from './Screens/LoginScreen/LoginScreen';
 import HomeScreen from './Screens/HomeScreen/HomeScreen';
-
 
 
 const Stack = createStackNavigator();
@@ -22,7 +19,6 @@ const loadFonts = async () => {
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
   });
 };
-
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);

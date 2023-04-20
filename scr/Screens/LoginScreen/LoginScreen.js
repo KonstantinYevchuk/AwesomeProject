@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
     paddingTop: 92,
     paddingBottom: 45,
     backgroundColor: '#FFFFFF',
-    borderTopRadius: 25,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
   },
   img: {
     flex: 1,

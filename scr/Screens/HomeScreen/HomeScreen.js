@@ -18,10 +18,10 @@ const StackHome = createStackNavigator();
 const HomeScreen = ({navigation}) => {
   return (
     <Tabs.Navigator
-    tabBarOptions={{
-      activeTintColor: "#FFFFFF",
+    screenOptions={{
+      tabBarActiveTintColor: "#FFFFFF",
       inactiveTintColor: "#212121CC",
-      showLabel: false,
+      tabBarShowLabel: false,
     }}>
       <Tabs.Screen 
       name="Posts Screen" 
@@ -62,7 +62,7 @@ const HomeScreen = ({navigation}) => {
             headerStyle: {
               backgroundColor: "#fff",
               borderBottomWidth: 1,
-              textAlign: "center"
+              // textAlign: "center"
             },
             headerTintColor: "black",
             headerTitleStyle: {

@@ -5,7 +5,8 @@ import {
   StyleSheet, 
   Image, 
   TextInput,  
-  Keyboard } from "react-native";
+  Keyboard,
+  Button } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Feather } from '@expo/vector-icons';
@@ -13,26 +14,47 @@ import * as Location from "expo-location";
 
 function CreatePostsScreen({navigation}) {
     const [camera, setCamera] = useState(null);
+    const [permission, requestPermission] = Camera.useCameraPermissions();
     const [photo, setPhoto] = useState(null);
     const [text, setText] = useState('');
     const [location, setLocation] = useState(null);
 
+    if (!permission) {
+      // Camera permissions are still loading
+      return <View />;
+    }
+  
+    if (!permission.granted) {
+      // Camera permissions are not granted yet
+      return (
+        <View style={styles.containerPermission}>
+          <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+          <Button onPress={requestPermission} title="grant permission" />
+        </View>
+      );
+    }
 
     const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
+
+    let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
     let location = await Location.getCurrentPositionAsync({}); 
     console.log('latitude',location.coords.latitude)
     console.log('longitude',location.coords.longitude) 
     setLocation(location);
   };
-
+  console.log(location);
     const sendPhoto = () => {
-    navigation.navigate("Posts Screen", { photo, text, location });
+    navigation.navigate("DefaultScreen", { photo, text, location });
     setText('')
   };
 
-    const onChangeText = (text) => setText(text);
+  const onChangeText = (text) => setText(text);
 
   return (
     <View style={styles.containerCreate}>
@@ -81,6 +103,11 @@ const styles = StyleSheet.create({
   containerCreate: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+  },
+  containerPermission: {
+    flex: 1, 
+    justifyContent: "center",
+    alignItems: "center"
   },
   camera: {
         height: 300,

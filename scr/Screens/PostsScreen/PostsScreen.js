@@ -1,38 +1,33 @@
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from '@react-navigation/stack';
 import { useState, useEffect } from "react";
+import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import DefaultScreenPosts from "../nestedScreens/DefaultScreen/DefaultScreen";
+import MapScreen from "../nestedScreens/MapScreen/MapScreen";
+import CommentsScreen from "../nestedScreens/CommentsScreen/CommentsScreen";
 
-const Tabs = createBottomTabNavigator();
+const NestedScreen = createStackNavigator();
+
 
 const PostsScreen = ({ navigation, route }) => {
-    const { email, password, photo, text } = route.params;
-    const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    if (route.params) {
-      setPosts((prevState) => [...prevState, route.params]);
-    }
-  }, [route.params]);
-  console.log("posts", posts);
+    const { email, password } = route.params;
+  
+  
   return (
     <View style={styles.containerPost}>
     <Text style={styles.text}>Posts Screen:{email} {password} </Text>
-    <FlatList
-        data={posts}
-        keyExtractor={(item, indx) => indx.toString()}
-        renderItem={({ item }) => (
-          <View
-            style={styles.imageContainer}
-          >
-            <Image
-              source={{ uri: item.photo }}
-              style={styles.image}
-            />
-            <Text style={styles.imageDescription}>{item.text}</Text>
-            <Text style={styles.imageDescription}>{item.location}</Text>
-          </View>
-        )}
+    <NestedScreen.Navigator>
+      <NestedScreen.Screen
+        name="DefaultScreen"
+        component={DefaultScreenPosts}
+        options={{
+          headerShown: false
+        }}
       />
+      <NestedScreen.Screen name="Comments" component={CommentsScreen} />
+      <NestedScreen.Screen name="Map" component={MapScreen} />
+    </NestedScreen.Navigator>
     </View>
 
   );
@@ -49,54 +44,66 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginTop: 50,
   },
-  imageContainer: {
-    marginBottom: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 50,
-    borderRadius: 20,
-  },
-  image: {
-    width: 350, 
-    height: 200,
-    borderRadius: 20,
-  },
-  imageDescription: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    alignSelf: 'flex-start',
-    
-  }
+  // imageContainer: {
+  //   marginBottom: 10,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   marginHorizontal: 50,
+  //   borderRadius: 20,
+  // },
+  // image: {
+  //   width: 350, 
+  //   height: 200,
+  //   borderRadius: 20,
+  // },
+  // imageDescription: {
+  //   justifyContent: 'flex-start',
+  //   alignItems: 'flex-start',
+  //   alignSelf: 'flex-start',
+  // },
+  // commentsLocation: {
+  //   flexDirection: "row",
+  // },
+  // comments: {
+  //   marginRight: 250,
+  // }
 });
 
 export default PostsScreen;
 
 
+// const [posts, setPosts] = useState([]);
 
- {/* <Tabs.Navigator
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
-
-        if (route.name === "Profile") {
-          iconName = focused
-            ? "ios-information-circle"
-            : "ios-information-circle-outline";
-        } else if (route.name === "Settings") {
-          iconName = focused ? "ios-list-box" : "ios-list";
-        }
-        return <Ionicons name={iconName} size={size} color={color} />;
-      },
-    })}
-    tabBarOptions={{
-      activeTintColor: "tomato",
-      inactiveTintColor: "gray",
-    }}
+// useEffect(() => {
+//   if (route.params) {
+//     setPosts((prevState) => [...prevState, route.params]);
+//   }
+// }, [route.params]);
+{/* <FlatList
+data={posts}
+keyExtractor={(item, indx) => indx.toString()}
+renderItem={({ item }) => (
+  <View
+    style={styles.imageContainer}
   >
-     
-    <Tabs.Screen name="Settings" component={Settings} />
-    <Tabs.Screen name="Profile" component={Profile} />
-  </Tabs.Navigator> */}
+    <Image
+      source={{ uri: item.photo }}
+      style={styles.image}
+    />
+    <Text style={styles.imageDescription}>{item.text}</Text>
+    <View style={styles.commentsLocation}>
+    <TouchableOpacity style={styles.comments}>
+    <FontAwesome name="comment-o" size={24} color="black" />
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("Map")}>
+    <Feather name="map-pin" size={24} color="black" />
+    {/* <Text style={styles.imageDescription}>{item.location}</Text> */}
+//     </TouchableOpacity> 
+//     </View>
+    
+//   </View>
+// )}
+// /> */}
 
 
 

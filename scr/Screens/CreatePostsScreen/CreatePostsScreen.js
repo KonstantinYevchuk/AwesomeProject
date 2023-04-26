@@ -1,27 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   View, 
   Text, 
   StyleSheet, 
   Image, 
-  TextInput, 
-  TouchableNativeFeedback, 
+  TextInput,  
   Keyboard } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { Feather } from '@expo/vector-icons';
+import * as Location from "expo-location";
 
 function CreatePostsScreen({navigation}) {
     const [camera, setCamera] = useState(null);
     const [photo, setPhoto] = useState(null);
     const [text, setText] = useState('');
+    const [location, setLocation] = useState(null);
+
 
     const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
+    let location = await Location.getCurrentPositionAsync({}); 
+    console.log('latitude',location.coords.latitude)
+    console.log('longitude',location.coords.longitude) 
+    setLocation(location);
   };
 
     const sendPhoto = () => {
-    navigation.navigate("Posts Screen", { photo, text });
+    navigation.navigate("Posts Screen", { photo, text, location });
     setText('')
   };
 
@@ -40,7 +47,7 @@ function CreatePostsScreen({navigation}) {
           </View>
         )}
          <TouchableOpacity onPress={takePhoto} style={styles.snapContainer}>
-            <Text style={styles.snap}>SNAP</Text>
+         <Feather name="camera" size={24} color="white" />
          </TouchableOpacity>
        </Camera>
        
@@ -50,6 +57,14 @@ function CreatePostsScreen({navigation}) {
         value={text}
         style={styles.input}
         placeholder="Desctiption"
+        />
+        </View>
+        <View>
+        <TextInput
+        // onChangeText={onChangeText}
+        value={location}
+        style={styles.input}
+        placeholder="Location"
         />
         </View>
             <View>
@@ -74,13 +89,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
         borderRadius: 10,
       },
-      snap: {
-        color: "#FF6C00",
-      },
       snapContainer: {
         marginTop: 200,
-        borderWidth: 1,
-        borderColor: "#FF6C00",
+        backgroundColor: "#FFFFFF4D",
         width: 70,
         height: 70,
         borderRadius: 50,

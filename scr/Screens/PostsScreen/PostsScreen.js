@@ -2,8 +2,6 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from "react
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useState, useEffect } from "react";
 
-
-
 const Tabs = createBottomTabNavigator();
 
 const PostsScreen = ({ navigation, route }) => {
@@ -31,6 +29,7 @@ const PostsScreen = ({ navigation, route }) => {
               style={styles.image}
             />
             <Text style={styles.imageDescription}>{item.text}</Text>
+            <Text style={styles.imageDescription}>{item.location}</Text>
           </View>
         )}
       />
@@ -42,11 +41,12 @@ const PostsScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   containerPost: {
     flex: 1,
-    // alignItems: "flex-start",
+    // alignItems: "center",
     // justifyContent: "flex-start",
     backgroundColor: '#FFFFFF',
   },
   text: {
+    marginLeft: 40,
     marginTop: 50,
   },
   imageContainer: {

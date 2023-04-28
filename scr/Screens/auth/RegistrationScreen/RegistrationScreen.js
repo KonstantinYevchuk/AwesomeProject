@@ -20,34 +20,12 @@ import { Text,
   };
 
 const RegistrationScreen = ({navigation}) => {
-    // const [login, setLogin] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
     const [state, setState] = useState(initialState); 
      const [dimensions, setDimensions] = useState(
       Dimensions.get("window").width - 20 * 2
     );   
-    // const [isReady, setIsReady] = useState(false)
-    // const [isShowKeyboard, setIsShowKeyboard] = useState(null);
-    // const [fontsLoaded] = useFonts({
-    //   "Roboto-Regular": require("../../../assets/fonts/Roboto-Regular.ttf"),
-    //   "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
-    // });
-  
-    // const handleInputLogin = (text) => setLogin(text);
-    // const handleInputEmail = (text) => setEmail(text);
-    // const handleInputPassword = (text) => setPassword(text);
-   
-    
+ 
     useEffect(() => {
-      // const loadFonts = async () => {
-      //   await Font.loadAsync({
-      //     "Roboto-Regular": require("../../../assets/fonts/Roboto-Bold.ttf"),
-      //     "Roboto-Bold": require("../../../assets/fonts/Roboto-Bold.ttf"),
-      //   });
-      //   setIsReady(true)
-      // };
-      // loadFonts()
       const onChange = () => {
         const width = Dimensions.get("window").width - 20 * 2;
         
@@ -58,6 +36,7 @@ const RegistrationScreen = ({navigation}) => {
         Dimensions.removeEventListener("change", onChange);
       };
     }, [])
+
     const onRegistration = () => {
       const { login, email, password } = state;
       if(login === '' || email === '' || password === '') {
@@ -65,12 +44,12 @@ const RegistrationScreen = ({navigation}) => {
         return
       }
       Keyboard.dismiss();
-      navigation.navigate('Home', {
-        screen: 'Posts Screen',
-        params: {email: email,password: password,}   
-      }
+      navigation.navigate('Home', {email, password})
+      //   screen: 'Posts Screen',
+      //   params: {email: email,password: password,}   
+      // }
      
-      )
+      
       setState(initialState);
       // setIsShowKeyboard(false)
       // Alert.alert("Registration is done:", 
@@ -83,7 +62,7 @@ const RegistrationScreen = ({navigation}) => {
     return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
             <View style={styles.container}>
-            <ImageBackground source={require('../../../assets/images/back.jpg')} style={styles.img}>
+            <ImageBackground source={require('../../../../assets/images/back.jpg')} style={styles.img}>
             <View style={styles.containerReg}>
             <Text style={styles.title}>Registration</Text>
             <View style={{

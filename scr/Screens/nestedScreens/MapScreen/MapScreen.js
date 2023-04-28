@@ -1,7 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
-const MapScreen = () => (
+const MapScreen = ({route}) => {
+
+  return (
   <View style={styles.container}>
     <MapView
       style={{ flex: 1 }}
@@ -18,7 +20,7 @@ const MapScreen = () => (
       />
     </MapView>
   </View>
-);
+);}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Text,
+import { 
+  Text,
   View, 
   TextInput, 
   Alert,
@@ -11,23 +12,23 @@ import { Text,
   TouchableWithoutFeedback, 
   Keyboard,
   Dimensions } from "react-native";
+  import { useFonts } from 'expo-font';
+  import * as SplashScreen from 'expo-splash-screen';
+
+  SplashScreen.preventAutoHideAsync();
 
   const initialState = {
     email: "",
     password: "",
   };
   
-
 const LoginScreen = ({navigation}) => {
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
   const [state, setState] = useState(initialState);
   // const [isReady, setIsReady] = useState(false);
   const [dimensions, setDimensions] = useState(
     Dimensions.get("window").width - 20 * 2
   );
-  // const handleInputEmail = (text) => setEmail(text);
-  // const handleInputPassword = (text) => setPassword(text);
+
   const { email, password } = state;
   useEffect(() => {
    
@@ -41,26 +42,40 @@ const LoginScreen = ({navigation}) => {
     };
   }, [])
 
+  const [fontsLoaded] = useFonts({
+    RobotoMedium: require('../../../../assets/fonts/Roboto-Medium.ttf'),
+    RobotoRegular: require('../../../../assets/fonts/Roboto-Regular.ttf'),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   const onRegistration = () => {
     if(email === '' || password === '') {
       Alert.alert("Please, fill all fields")
       return
     }
     Keyboard.dismiss();
-    navigation.navigate('Home', {
-      screen: 'Posts Screen',
-      params: {email: email,password: password,}   
-    }
-   
-    )
-    // Alert.alert("You are log in:", `Email:${email} Password:${password}`);
+    navigation.navigate('Home', {email, password})
+    // {
+    //   screen: 'Posts Screen',
+    //   params: {email: email,password: password,}   
+    // }
+    
     setState(initialState);
   }
 
   return (
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
-          <View style={styles.container}>
-            <ImageBackground source={require('../../../assets/images/back.jpg')} style={styles.img}>
+          <View style={styles.container} onLayout={onLayoutRootView}>
+            <ImageBackground source={require('../../../../assets/images/back.jpg')} style={styles.img}>
             <View style={styles.containerLog}>
             
           <Text style={styles.title}>Enter your account</Text>

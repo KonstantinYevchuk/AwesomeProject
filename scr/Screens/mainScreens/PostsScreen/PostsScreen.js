@@ -1,19 +1,15 @@
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from "react-native";
 import { createStackNavigator } from '@react-navigation/stack';
-import { useState, useEffect } from "react";
-import { FontAwesome } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import DefaultScreenPosts from "../nestedScreens/DefaultScreen/DefaultScreen";
-import MapScreen from "../nestedScreens/MapScreen/MapScreen";
-import CommentsScreen from "../nestedScreens/CommentsScreen/CommentsScreen";
+
+import DefaultScreenPosts from "../../nestedScreens/DefaultScreen/DefaultScreen";
+import MapScreen from "../../nestedScreens/MapScreen/MapScreen";
+import CommentsScreen from "../../nestedScreens/CommentsScreen/CommentsScreen";
 
 const NestedScreen = createStackNavigator();
 
-
 const PostsScreen = ({ navigation, route }) => {
     const { email, password } = route.params;
-  
-  
+
   return (
     <View style={styles.containerPost}>
     <Text style={styles.text}>Posts Screen:{email} {password} </Text>
@@ -36,42 +32,26 @@ const PostsScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   containerPost: {
     flex: 1,
-    // alignItems: "center",
-    // justifyContent: "flex-start",
     backgroundColor: '#FFFFFF',
   },
   text: {
     marginLeft: 40,
     marginTop: 50,
   },
-  // imageContainer: {
-  //   marginBottom: 10,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   marginHorizontal: 50,
-  //   borderRadius: 20,
-  // },
-  // image: {
-  //   width: 350, 
-  //   height: 200,
-  //   borderRadius: 20,
-  // },
-  // imageDescription: {
-  //   justifyContent: 'flex-start',
-  //   alignItems: 'flex-start',
-  //   alignSelf: 'flex-start',
-  // },
-  // commentsLocation: {
-  //   flexDirection: "row",
-  // },
-  // comments: {
-  //   marginRight: 250,
-  // }
 });
 
 export default PostsScreen;
 
 
+
+
+
+
+
+
+
+
+// --------------------------------------
 // const [posts, setPosts] = useState([]);
 
 // useEffect(() => {

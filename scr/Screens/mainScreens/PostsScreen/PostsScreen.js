@@ -8,11 +8,11 @@ import CommentsScreen from "../../nestedScreens/CommentsScreen/CommentsScreen";
 const NestedScreen = createStackNavigator();
 
 const PostsScreen = ({ navigation, route }) => {
-    const { email, password } = route.params;
+    // const { email, password } = route.params;
 
   return (
     <View style={styles.containerPost}>
-    <Text style={styles.text}>Posts Screen:{email} {password} </Text>
+    {/* <Text style={styles.text}>Posts Screen:{email} {password} </Text> */}
     <NestedScreen.Navigator>
       <NestedScreen.Screen
         name="DefaultScreen"

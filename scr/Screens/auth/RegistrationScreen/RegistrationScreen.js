@@ -44,7 +44,7 @@ const RegistrationScreen = ({navigation}) => {
         return
       }
       Keyboard.dismiss();
-      navigation.navigate('Home', {email, password})
+      navigation.navigate('Home')
       //   screen: 'Posts Screen',
       //   params: {email: email,password: password,}   
       // }

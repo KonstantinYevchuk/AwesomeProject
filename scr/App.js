@@ -3,7 +3,8 @@
 // import AppLoading from 'expo-app-loading';
 // import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { useRoute } from "./Components/router";
+// import { useRoute } from "./Components/router";
+import useRoute from './Components/router';
 
 // const Stack = createStackNavigator();
 

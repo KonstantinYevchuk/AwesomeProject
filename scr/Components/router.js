@@ -1,13 +1,13 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
+
+import LoginScreen from "../Screens/auth/LoginScreen/LoginScreen";
+import RegistrationScreen from "../Screens/auth/RegistrationScreen/RegistrationScreen";
+import Home from "../Screens/mainScreens/HomeScreen/HomeScreen";
 
 import CreatePostsScreen from "../Screens/mainScreens/CreatePostsScreen/CreatePostsScreen";
 import ProfileScreen from '../Screens/mainScreens/ProfileScreen/ProfileScreen';
-
-import RegistrationScreen from "../Screens/auth/RegistrationScreen/RegistrationScreen";
-import LoginScreen from "../Screens/auth/LoginScreen/LoginScreen";
-import Home from "../Screens/mainScreens/HomeScreen/HomeScreen";
 
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from '@expo/vector-icons';

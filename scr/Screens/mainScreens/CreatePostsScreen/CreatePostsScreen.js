@@ -43,8 +43,6 @@ function CreatePostsScreen({navigation}) {
         return;
       }
     let location = await Location.getCurrentPositionAsync({}); 
-    console.log('latitude',location.coords.latitude)
-    console.log('longitude',location.coords.longitude) 
     setLocation(location);
   };
 

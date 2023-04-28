@@ -15,7 +15,7 @@ const Home = ({navigation}) => {
   return (
     <NestedScreen.Navigator>
         <NestedScreen.Screen
-          name="Posts Screen"
+          name="PostsScreen"
           component={PostsScreen}
           options={{ headerShown: true }}
         />

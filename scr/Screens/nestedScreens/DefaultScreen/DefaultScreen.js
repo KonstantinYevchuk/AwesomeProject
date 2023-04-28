@@ -5,8 +5,6 @@ import { Feather } from '@expo/vector-icons';
 
 const DefaultScreenPosts = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
-  console.log(route.params);
-  // const { location } = route.params;
 
   useEffect(() => {
     if (route.params) {
@@ -33,7 +31,6 @@ const DefaultScreenPosts = ({ route, navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Map")}>
             <Feather name="map-pin" size={24} color="black" />
-            {/* <Text style={styles.imageDescription}>{item.location.coords.latitude}</Text> */}
             </TouchableOpacity> 
             </View>
             

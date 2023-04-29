@@ -18,7 +18,7 @@ const PostsScreen = ({ navigation, route }) => {
         name="DefaultScreen"
         component={DefaultScreenPosts}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <NestedScreen.Screen name="Comments" component={CommentsScreen} />

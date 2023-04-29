@@ -15,7 +15,7 @@ import { AntDesign } from '@expo/vector-icons';
 const MainStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
 
- const useRoute = (isAuth) => {
+export const useRoute = (isAuth) => {
     if (!isAuth) {
       return <MainStack.Navigator initialRouteName="Login">
         <MainStack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
@@ -83,4 +83,4 @@ const MainTab = createBottomTabNavigator();
     }
   });
 
-  export default useRoute
+  // export default useRoute

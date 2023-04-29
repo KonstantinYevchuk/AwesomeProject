@@ -17,7 +17,18 @@ const Home = ({navigation}) => {
         <NestedScreen.Screen
           name="PostsScreen"
           component={PostsScreen}
-          options={{ headerShown: true }}
+          options={{ 
+            headerShown: true,
+            headerRight: () => (
+              <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.btnLogOut}
+                    onPress={() => navigation.navigate('Login')}
+                  >
+                  <Text style={styles.btnTitleLogOut}><Feather name="log-out" size={24} color="#212121CC" /></Text>
+                  </TouchableOpacity>
+                  ), 
+             }}
         />
         <NestedScreen.Screen name="MapScreen" component={MapScreen} />
         <NestedScreen.Screen
@@ -40,17 +51,17 @@ const Home = ({navigation}) => {
   );
 };
 
-// const styles = StyleSheet.create({
-//   btnLogOut: {
-//     paddingLeft: 10,
-//     paddingRight: 10,
-//     paddingTop: 5,
-//     paddingBottom: 5
-//   },
-//   btnTitleLogOut: {
-//     fontSize: 14
-//   }
-// });
+const styles = StyleSheet.create({
+  btnLogOut: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 5,
+    paddingBottom: 5
+  },
+  btnTitleLogOut: {
+    fontSize: 14
+  }
+});
 
 export default Home;
 

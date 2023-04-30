@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-
+import { useDispatch } from "react-redux";
+import { authSignUpUser } from "../../../redux/auth/authOperations";
 import { Text,
   View, 
   TextInput, 
@@ -21,9 +22,10 @@ import { Text,
 
 const RegistrationScreen = ({navigation}) => {
     const [state, setState] = useState(initialState); 
-     const [dimensions, setDimensions] = useState(
+    const [dimensions, setDimensions] = useState(
       Dimensions.get("window").width - 20 * 2
-    );   
+    ); 
+    const dispatch = useDispatch();  
  
     useEffect(() => {
       const onChange = () => {
@@ -44,7 +46,8 @@ const RegistrationScreen = ({navigation}) => {
         return
       }
       Keyboard.dismiss();
-      navigation.navigate('Home')
+      dispatch(authSignUpUser(state));
+      // navigation.navigate('Home')
       //   screen: 'Posts Screen',
       //   params: {email: email,password: password,}   
       // }
@@ -141,7 +144,7 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
     },
     containerReg: {
-      fontFamily: "Roboto-Regular",
+      fontFamily: "RobotoRegular",
       fontSize: 16,
       paddingTop: 80,
       paddingBottom: 45,
@@ -193,7 +196,7 @@ const styles = StyleSheet.create({
     title: {
       marginBottom: 32,
       textAlign: 'center',
-      fontFamily: "Roboto-Bold",
+      fontFamily: "RobotoBold",
       fontSize: 30,
     },
     text: {
@@ -206,7 +209,7 @@ const styles = StyleSheet.create({
       flexDirection: "row"
     },
     btnNavigateTitle: {
-      fontFamily: "Roboto-Bold"
+      fontFamily: "RobotoBold"
     }
   });
 

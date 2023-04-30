@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { authSignInUser } from "../../../redux/auth/authOperations";
 import { 
   Text,
   View, 
@@ -28,6 +30,7 @@ const LoginScreen = ({navigation}) => {
   const [dimensions, setDimensions] = useState(
     Dimensions.get("window").width - 20 * 2
   );
+  const dispatch = useDispatch();
 
   const { email, password } = state;
   useEffect(() => {
@@ -43,8 +46,9 @@ const LoginScreen = ({navigation}) => {
   }, [])
 
   const [fontsLoaded] = useFonts({
-    RobotoMedium: require('../../../../assets/fonts/Roboto-Medium.ttf'),
-    RobotoRegular: require('../../../../assets/fonts/Roboto-Regular.ttf'),
+    'RobotoMedium': require('../../../../assets/fonts/Roboto-Medium.ttf'),
+    'RobotoRegular': require('../../../../assets/fonts/Roboto-Regular.ttf'),
+    'RobotoBold': require('../../../../assets/fonts/Roboto-Bold.ttf'),
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -57,13 +61,14 @@ const LoginScreen = ({navigation}) => {
     return null;
   }
 
-  const onRegistration = () => {
+  const onSighIn = () => {
     if(email === '' || password === '') {
       Alert.alert("Please, fill all fields")
       return
     }
     Keyboard.dismiss();
-    navigation.navigate('Home')
+    dispatch(authSignInUser(state))
+    // navigation.navigate('Home')
     // {
     //   screen: 'Posts Screen',
     //   params: {email: email,password: password,}   
@@ -103,7 +108,7 @@ const LoginScreen = ({navigation}) => {
          <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.btn}
-                onPress={onRegistration}
+                onPress={onSighIn}
               >
           <Text style={styles.btnTitle}>LOG IN</Text>
               </TouchableOpacity>
@@ -136,7 +141,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   containerLog: {
-    fontFamily: "Roboto-Regular",
+    fontFamily: "RobotoRegular",
     fontSize: 16,
     paddingTop: 92,
     paddingBottom: 45,
@@ -193,7 +198,7 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: 20,
     textAlign: 'center',
-    fontFamily: "Roboto-Bold",
+    fontFamily: "RobotoBold",
     fontSize: 30,
   },
   text: {
@@ -206,7 +211,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   btnNavigateTitle: {
-    fontFamily: "Roboto-Bold"
+    fontFamily: "RobotoBold"
   }
 });
 export default LoginScreen

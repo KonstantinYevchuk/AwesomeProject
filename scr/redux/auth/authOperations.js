@@ -1,5 +1,10 @@
 import { auth } from "../../firebase/config";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    updateProfile, 
+    onAuthStateChanged 
+} from "firebase/auth";
 import { authSlice } from "./authReducer";
 const { updateUserProfile } = authSlice.actions;
 
@@ -42,5 +47,7 @@ export const authSignInUser = ({ email, password }) => async (dispatch, getState
 
 export const authSignOutUser = () => async (dispatch, getState) => {};
 
-export const authStateChange = () => async (dispatch, getState) => {};
+export const authStateChange = () => async (dispatch, getState) => {
+    onAuthStateChanged(auth, (user) => setUser(user));
+};
 

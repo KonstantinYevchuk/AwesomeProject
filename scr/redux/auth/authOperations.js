@@ -3,10 +3,11 @@ import {
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, 
     updateProfile, 
-    onAuthStateChanged 
+    onAuthStateChanged,
+    signOut 
 } from "firebase/auth";
 import { authSlice } from "./authReducer";
-const { updateUserProfile } = authSlice.actions;
+const { updateUserProfile, authStateChange, authSignOut } = authSlice.actions;
 
 
 export const authSignUpUser = ({ email, password, login }) => async (dispatch, getState) => {
@@ -14,7 +15,7 @@ export const authSignUpUser = ({ email, password, login }) => async (dispatch, g
     try {
        await createUserWithEmailAndPassword(auth, email, password);
        const user = await auth.currentUser;
-        console.log(user)
+    //    console.log(user);
         const { displayName, uid } = await auth.currentUser;
 
         await updateProfile(user, {
@@ -26,7 +27,7 @@ export const authSignUpUser = ({ email, password, login }) => async (dispatch, g
             login: displayName,
         }))
     //    dispatch(authSlice.actions.updateUserProfile({ userId: user.uid }))
-       console.log('user', user);
+    //    console.log('user', user);
        
     } catch (error) {
         console.log("error", error);
@@ -45,9 +46,24 @@ export const authSignInUser = ({ email, password }) => async (dispatch, getState
      }
 };
 
-export const authSignOutUser = () => async (dispatch, getState) => {};
+ export const authSingOutUser = () => async (dispatch, getState) => {
+    await signOut(auth);
+    dispatch(authSignOut())
+  }
 
-export const authStateChange = () => async (dispatch, getState) => {
-    onAuthStateChanged(auth, (user) => setUser(user));
+export const authStateChangeUser = () => async (dispatch, getState) => {
+    onAuthStateChanged(auth, (user) => {
+        console.log(user);
+        if(user) {
+            const userUpdateProfile = {
+              login: user.displayName,
+              userId: user.uid,
+              email: user.email,
+            };
+      dispatch(authStateChange({ stateChange: true }));
+      dispatch(updateUserProfile(userUpdateProfile));
+      
+        }
+    });
 };
 

@@ -1,4 +1,5 @@
-import Main from './Components/main';
+// import Main from './Components/Main';
+import MainApp from './Components/MainApp';
 // import { useState } from 'react';
 // import { auth } from './firebase/config';
 // import { onAuthStateChanged } from 'firebase/auth';
@@ -16,8 +17,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <Main/>
-    {/* <NavigationContainer>{routing}</NavigationContainer> */}
+      <MainApp />
     </Provider>
   );
 }

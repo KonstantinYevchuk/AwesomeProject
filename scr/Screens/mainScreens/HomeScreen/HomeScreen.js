@@ -12,6 +12,7 @@ const NestedScreen = createStackNavigator();
 // const Tabs = createBottomTabNavigator();
 
 const Home = ({navigation}) => {
+  
   return (
     <NestedScreen.Navigator>
         <NestedScreen.Screen

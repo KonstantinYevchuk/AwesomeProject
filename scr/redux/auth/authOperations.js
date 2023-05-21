@@ -1,5 +1,7 @@
-import { auth } from "../../firebase/config";
+// import { auth } from "../../firebase/config";
+import db from '../../firebase/config';
 import { 
+    getAuth,
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, 
     updateProfile, 
@@ -8,6 +10,8 @@ import {
 } from "firebase/auth";
 import { authSlice } from "./authReducer";
 const { updateUserProfile, authStateChange, authSignOut } = authSlice.actions;
+
+const auth = getAuth(db);
 
 
 export const authSignUpUser = ({ email, password, login }) => async (dispatch, getState) => {

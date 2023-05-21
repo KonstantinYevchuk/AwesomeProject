@@ -1,15 +1,17 @@
 
-// import firebase from "firebase";
-// import "firebase/auth";
-// import "firebase/firestore";
-// import "firebase/storage";
-import { initializeApp } from 'firebase/app';
-// Функція для підключення авторизації в проект
-import { getAuth } from "firebase/auth";
-// Функція для підключення бази даних у проект
+
+// import { initializeApp } from 'firebase/app';
+
+// import { getAuth } from "firebase/auth";
+
+// import { getFirestore } from "firebase/firestore";
+
+// import { getStorage } from "firebase/storage";
+import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-// Функція для підключення сховища файлів в проект
-import { getStorage } from "firebase/storage";
+import "firebase/auth";
+import "firebase/storage";
+import "firebase/firestore";
 
 
 const firebaseConfig = {
@@ -22,16 +24,16 @@ const firebaseConfig = {
     measurementId: "G-P2WFG257MW"
   };
 
-  const app = initializeApp(firebaseConfig);
-
-  export const auth = getAuth(app);
-  export const db = getFirestore(app);
-  export const storage = getStorage(app);
-
-    // export { auth, db, storage };
-
   // const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
+
+  // export const auth = getAuth(app);
+  // export const db = getFirestore(app);
+  // export const storage = getStorage(app);
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  
+  export default app;
 
 
 

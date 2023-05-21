@@ -1,11 +1,6 @@
-// import Main from './Components/Main';
-import MainApp from './Components/MainApp';
-// import { useState } from 'react';
-// import { auth } from './firebase/config';
-// import { onAuthStateChanged } from 'firebase/auth';
 
-// import { NavigationContainer } from '@react-navigation/native';
-// import { useRoute } from './Components/router';
+import MainApp from './Components/MainApp';
+
 import { Provider } from "react-redux";
 import { store } from './redux/store';
 

@@ -1,17 +1,17 @@
 
 
-// import { initializeApp } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 
-// import { getAuth } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
-// import { getFirestore } from "firebase/firestore";
-
-// import { getStorage } from "firebase/storage";
-import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import "firebase/auth";
-import "firebase/storage";
-import "firebase/firestore";
+
+import { getStorage } from "firebase/storage";
+// import { initializeApp } from "firebase/app";
+// import { getFirestore } from "firebase/firestore";
+// import "firebase/auth";
+// import "firebase/storage";
+// import "firebase/firestore";
 
 
 const firebaseConfig = {
@@ -24,16 +24,16 @@ const firebaseConfig = {
     measurementId: "G-P2WFG257MW"
   };
 
-  // const app = initializeApp(firebaseConfig);
-
-  // export const auth = getAuth(app);
-  // export const db = getFirestore(app);
-  // export const storage = getStorage(app);
-
   const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+
+  export const auth = getAuth(app);
+  export const db = getFirestore(app);
+  export const storage = getStorage(app);
+
+  // const app = initializeApp(firebaseConfig);
+  // const db = getFirestore(app);
   
-  export default app;
+  // export default app;
 
 
 

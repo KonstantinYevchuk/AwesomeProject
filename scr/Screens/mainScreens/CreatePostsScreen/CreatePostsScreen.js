@@ -6,11 +6,14 @@ import {
   Image, 
   TextInput,  
   Keyboard,
+  TouchableOpacity,
   Button } from "react-native";
 import { Camera } from "expo-camera";
-import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Feather } from '@expo/vector-icons';
 import * as Location from "expo-location";
+import { db } from "../../../firebase/config"; 
+
 
 function CreatePostsScreen({navigation}) {
     const [camera, setCamera] = useState(null);
@@ -50,6 +53,11 @@ function CreatePostsScreen({navigation}) {
     navigation.navigate("DefaultScreen", { photo, text, location });
     setText('')
   };
+
+  const uploadPhotoToServer = async () => {
+    const response = await fetch(photo);
+    const file = await response.blob();
+  }
 
   const onChangeText = (text) => setText(text);
 

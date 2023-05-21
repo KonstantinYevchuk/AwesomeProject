@@ -5,7 +5,7 @@ import { auth } from '../firebase/config';
 import { authStateChangeUser } from '../redux/auth/authOperations';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { useRoute } from './router';
+import useRoute from './router';
 
 const MainApp = () => {
     const {stateChange} = useSelector(state => state.auth)

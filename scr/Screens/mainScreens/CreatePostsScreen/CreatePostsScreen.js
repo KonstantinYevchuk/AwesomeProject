@@ -12,7 +12,13 @@ import { Camera } from "expo-camera";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Feather } from '@expo/vector-icons';
 import * as Location from "expo-location";
-import { db } from "../../../firebase/config"; 
+import { nanoid } from 'nanoid';
+
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { async } from "@firebase/util";
+import { collection, addDoc } from "firebase/firestore";
+import { db, storage } from "../../../firebase/config"; 
+
 
 
 function CreatePostsScreen({navigation}) {
@@ -50,13 +56,24 @@ function CreatePostsScreen({navigation}) {
   };
 
     const sendPhoto = () => {
-    navigation.navigate("DefaultScreen", { photo, text, location });
+    uploadPhotoToServer();  
+    navigation.navigate("DefaultScreen", { photo, text});
     setText('')
   };
 
   const uploadPhotoToServer = async () => {
     const response = await fetch(photo);
     const file = await response.blob();
+
+    const uniquePostId = Date.now().toString();
+
+    const storageRef = ref(storage, `postImage/${uniquePostId}`)
+
+    await uploadBytes(storageRef, file)
+  
+  //   const getStorageRef = await getDownloadURL(storageRef);
+    
+  //  return getStorageRef;
   }
 
   const onChangeText = (text) => setText(text);

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import * as Location from "expo-location";
 import { 
   View, 
   Text, 
@@ -11,10 +13,10 @@ import {
 import { Camera } from "expo-camera";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Feather } from '@expo/vector-icons';
-import * as Location from "expo-location";
-import { nanoid } from 'nanoid';
 
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+// import { nanoid } from 'nanoid';
+
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { async } from "@firebase/util";
 import { collection, addDoc } from "firebase/firestore";
 import { db, storage } from "../../../firebase/config"; 
@@ -27,6 +29,32 @@ function CreatePostsScreen({navigation}) {
     const [photo, setPhoto] = useState(null);
     const [text, setText] = useState('');
     const [location, setLocation] = useState(null);
+    console.log("location", location);
+
+    const { userId, login, email } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+      (async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          console.log("Permission to access location was denied");
+          return
+        }
+        
+        let locationRes = await Location.getCurrentPositionAsync({});
+        setLocation(locationRes);
+      })();
+
+      const requestCameraPermission = async () => {
+        const { status } = await Camera.requestCameraPermissionsAsync();
+        if (status !== "granted") {
+          console.log("Camera permission denied");
+        } else {
+          console.log("Camera permission granted");
+        }
+      };
+      requestCameraPermission()
+    }, []);
 
     if (!permission) {
       // Camera permissions are still loading
@@ -46,20 +74,36 @@ function CreatePostsScreen({navigation}) {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
 
-    let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-    let location = await Location.getCurrentPositionAsync({}); 
-    setLocation(location);
-  };
+    let locationRes = await Location.getCurrentPositionAsync({}); 
+    // setLocation(locationRes);
 
+    console.log("text",text);
+    console.log('latitude',location)
+
+  };
+    
+  
     const sendPhoto = () => {
-    uploadPhotoToServer();  
-    navigation.navigate("DefaultScreen", { photo, text});
+    uploadPostToServer();
+    navigation.navigate("DefaultScreen", { photo, text, location});
     setText('')
   };
+
+  const uploadPostToServer = async () => {
+    try {
+      const photo = await uploadPhotoToServer();
+      await addDoc(collection(db, "posts"), {
+        photo,
+        text,
+        location,
+        userId,
+        login, 
+        email,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const uploadPhotoToServer = async () => {
     const response = await fetch(photo);
@@ -71,9 +115,9 @@ function CreatePostsScreen({navigation}) {
 
     await uploadBytes(storageRef, file)
   
-  //   const getStorageRef = await getDownloadURL(storageRef);
+    const getStorageRef = await getDownloadURL(storageRef);
     
-  //  return getStorageRef;
+   return getStorageRef;
   }
 
   const onChangeText = (text) => setText(text);

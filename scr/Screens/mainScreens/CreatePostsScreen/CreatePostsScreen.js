@@ -75,7 +75,7 @@ function CreatePostsScreen({navigation}) {
     setPhoto(photo.uri);
 
     let locationRes = await Location.getCurrentPositionAsync({}); 
-    // setLocation(locationRes);
+    setLocation(locationRes);
 
     console.log("text",text);
     console.log('latitude',location)
@@ -85,7 +85,7 @@ function CreatePostsScreen({navigation}) {
   
     const sendPhoto = () => {
     uploadPostToServer();
-    navigation.navigate("DefaultScreen", { photo, text, location});
+    navigation.navigate("DefaultScreen");
     setText('')
   };
 

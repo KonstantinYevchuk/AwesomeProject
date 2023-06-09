@@ -1,16 +1,35 @@
 import { useState, useEffect } from "react";
 import { View, StyleSheet, FlatList, Image, TouchableOpacity, Text } from "react-native";
+
+import { db } from "../../../firebase/config";
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { FontAwesome } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+
 
 const DefaultScreenPosts = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
 
+  const getAllPosts = async () => {
+    const userPostsRef = collection(db, "posts");
+    const unsubscribe = await onSnapshot(userPostsRef, (data) => {
+      const userPosts = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setPosts(userPosts);
+    });
+  return () => unsubscribe();
+  }
+
   useEffect(() => {
-    if (route.params) {
-      setPosts((prevState) => [...prevState, route.params]);
-    }
-  }, [route.params]);
+    getAllPosts()
+  });
   return (
     <View style={styles.container}>
     <FlatList

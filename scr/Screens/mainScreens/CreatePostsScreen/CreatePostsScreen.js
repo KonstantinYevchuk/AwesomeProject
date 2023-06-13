@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import * as Location from "expo-location";
 import { 
   View, 
   Text, 
@@ -10,11 +9,10 @@ import {
   Keyboard,
   TouchableOpacity,
   Button } from "react-native";
+import * as Location from "expo-location";
 import { Camera } from "expo-camera";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Feather } from '@expo/vector-icons';
-
-// import { nanoid } from 'nanoid';
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { async } from "@firebase/util";
@@ -29,7 +27,7 @@ function CreatePostsScreen({navigation}) {
     const [photo, setPhoto] = useState(null);
     const [text, setText] = useState('');
     const [location, setLocation] = useState(null);
-    console.log("location", location);
+   
 
     const { userId, login, email } = useSelector((state) => state.auth);
 
@@ -77,7 +75,6 @@ function CreatePostsScreen({navigation}) {
     let locationRes = await Location.getCurrentPositionAsync({}); 
     setLocation(locationRes);
 
-    console.log("text",text);
     console.log('latitude',location)
 
   };

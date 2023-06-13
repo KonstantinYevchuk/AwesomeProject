@@ -37,7 +37,7 @@ const Home = ({navigation}) => {
                   ), 
              }}
         />
-        <NestedScreen.Screen name="MapScreen" component={MapScreen} />
+        {/* <NestedScreen.Screen name="MapScreen" component={MapScreen} />
         <NestedScreen.Screen
           name="CommentsScreen"
           component={CommentsScreen}
@@ -53,7 +53,7 @@ const Home = ({navigation}) => {
               </TouchableOpacity>
             ),
           }}
-        />
+        /> */}
       </NestedScreen.Navigator>
   );
 };

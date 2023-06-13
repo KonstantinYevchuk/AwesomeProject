@@ -58,7 +58,7 @@ export const authSignInUser = ({ email, password }) => async (dispatch, getState
 
 export const authStateChangeUser = () => async (dispatch, getState) => {
     onAuthStateChanged(auth, (user) => {
-        console.log(user);
+        // console.log(user);
         if(user) {
             const userUpdateProfile = {
               login: user.displayName,

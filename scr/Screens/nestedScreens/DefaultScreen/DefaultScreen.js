@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { View, StyleSheet, FlatList, Image, TouchableOpacity, Text } from "react-native";
 
 import { db } from "../../../firebase/config";
@@ -15,6 +16,8 @@ import { Feather } from '@expo/vector-icons';
 const DefaultScreenPosts = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
 
+  const { userId } = useSelector((state) => state.auth);
+
   const getAllPosts = async () => {
     const userPostsRef = collection(db, "posts");
     const unsubscribe = await onSnapshot(userPostsRef, (data) => {
@@ -29,7 +32,8 @@ const DefaultScreenPosts = ({ route, navigation }) => {
 
   useEffect(() => {
     getAllPosts()
-  });
+  },[]);
+
   return (
     <View style={styles.container}>
     <FlatList
@@ -45,10 +49,15 @@ const DefaultScreenPosts = ({ route, navigation }) => {
             />
             <Text style={styles.imageDescription}>{item.text}</Text>
             <View style={styles.commentsLocation}>
-            <TouchableOpacity style={styles.comments} onPress={() => navigation.navigate("Comments")}>
+            <TouchableOpacity 
+            style={styles.comments} 
+            onPress={() => navigation.navigate("Comments")}
+            >
             <FontAwesome name="comment-o" size={24} color="black" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("Map")}>
+            <TouchableOpacity 
+            onPress={() => navigation.navigate("Map", {location: item.location})}
+            >
             <Feather name="map-pin" size={24} color="black" />
             </TouchableOpacity> 
             </View>
@@ -91,6 +100,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginTop: 10,
     marginBottom: 10,
+    marginLeft: 12,
   },
   commentsLocation: {
     flexDirection: "row",

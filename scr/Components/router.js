@@ -37,25 +37,17 @@ const useRoute = (isAuth) => {
       tabBarIcon: ({focused, size, color}) => <Feather name="grid" size={24} color={color}/>,
       tabBarActiveBackgroundColor: "#FF6C00",
       tabBarItemStyle: { borderRadius: 50 }, 
-      headerRight: () => (
-        <TouchableOpacity
-              activeOpacity={0.8}
-              style={styles.btnLogOut}
-              onPress={() => navigation.navigate('Login')}
-            >
-            <Text style={styles.btnTitleLogOut}><Feather name="log-out" size={24} color="#212121CC" /></Text>
-            </TouchableOpacity>
-            ), 
         }}   
     />
     <MainTab.Screen 
       name="Create"
       component={CreatePostsScreen}
       options={{
-      headerShown: false,
+      headerTitle: "Create Publication",
+      headerTitleAlign: "center",  
       tabBarIcon: ({focused, size,color}) => <AntDesign name="plus" size={24} color={color}/>,
       tabBarActiveBackgroundColor: "#FF6C00",
-      tabBarItemStyle: { borderRadius: 50 },   
+      tabBarItemStyle: { borderRadius: 50 },    
         }}  
     />
     <MainTab.Screen 
@@ -65,7 +57,7 @@ const useRoute = (isAuth) => {
       headerShown: false,
       tabBarIcon: ({focused, size,color}) => <Feather name="user" size={24} color={color} />,
       tabBarActiveBackgroundColor: "#FF6C00",
-      tabBarItemStyle: { borderRadius: 50 },    
+      tabBarItemStyle: { borderRadius: 50 },  
         }}   
     />
   </MainTab.Navigator>

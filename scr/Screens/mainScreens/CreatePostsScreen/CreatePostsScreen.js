@@ -27,7 +27,7 @@ function CreatePostsScreen({navigation}) {
     const [photo, setPhoto] = useState(null);
     const [text, setText] = useState('');
     const [location, setLocation] = useState(null);
-   
+    console.log(location);
 
     const { userId, login, email } = useSelector((state) => state.auth);
 
@@ -38,7 +38,6 @@ function CreatePostsScreen({navigation}) {
           console.log("Permission to access location was denied");
           return
         }
-        
         let locationRes = await Location.getCurrentPositionAsync({});
         setLocation(locationRes);
       })();
@@ -53,6 +52,14 @@ function CreatePostsScreen({navigation}) {
       };
       requestCameraPermission()
     }, []);
+
+    // useEffect(() => {
+    //   (async () => {
+    //     let locationRes = await Location.getCurrentPositionAsync({});
+    //     setLocation(locationRes);
+    //   })();
+
+    // }, []);
 
     if (!permission) {
       // Camera permissions are still loading
@@ -75,11 +82,10 @@ function CreatePostsScreen({navigation}) {
     let locationRes = await Location.getCurrentPositionAsync({}); 
     setLocation(locationRes);
 
-    console.log('latitude',location)
+    console.log('latitude',locationRes)
 
   };
     
-  
     const sendPhoto = () => {
     uploadPostToServer();
     navigation.navigate("DefaultScreen");
@@ -146,8 +152,7 @@ function CreatePostsScreen({navigation}) {
         </View>
         <View>
         <TextInput
-        // onChangeText={onChangeText}
-        // value={location}
+        // value={location.coords.longitude.toString()}
         style={styles.input}
         placeholder="Location"
         />
@@ -173,31 +178,31 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   camera: {
-        height: 300,
-        marginTop: 50,
-        alignItems: "center",
-        marginHorizontal: 15,
-        borderRadius: 10,
-      },
-      snapContainer: {
-        marginTop: 200,
-        backgroundColor: "#FFFFFF4D",
-        width: 70,
-        height: 70,
-        borderRadius: 50,
-        justifyContent: "center",
-        alignItems: "center",
-      },
-      takePhotoContainer: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-      },
-      image: {
-        width: '100%',
-        height: '100%',
+    height: 300,
+    marginTop: 30,
+    alignItems: "center",
+    marginHorizontal: 15,
+    borderRadius: 10,
+  },
+  snapContainer: {
+    marginTop: 200,
+    backgroundColor: "#FFFFFF4D",
+    width: 70,
+    height: 70,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+   },
+   takePhotoContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
       },
       inputContainer: {
         marginHorizontal: 20,
@@ -212,8 +217,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderBottomWidth: 1,
         borderColor: "#E8E8E8",
-        marginTop: 40,
-         
+        marginTop: 40,     
       },
         sendBtn: {
         marginHorizontal: 30,

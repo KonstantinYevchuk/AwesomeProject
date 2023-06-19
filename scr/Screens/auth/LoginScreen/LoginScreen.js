@@ -49,6 +49,8 @@ const LoginScreen = ({navigation}) => {
     'RobotoMedium': require('../../../../assets/fonts/Roboto-Medium.ttf'),
     'RobotoRegular': require('../../../../assets/fonts/Roboto-Regular.ttf'),
     'RobotoBold': require('../../../../assets/fonts/Roboto-Bold.ttf'),
+    'RobotoLight': require('../../../../assets/fonts/Roboto-Light.ttf'),
+    'RobotoThinItalic': require('../../../../assets/fonts/Roboto-ThinItalic.ttf'),
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -68,11 +70,6 @@ const LoginScreen = ({navigation}) => {
     }
     Keyboard.dismiss();
     dispatch(authSignInUser(state))
-    // navigation.navigate('Home')
-    // {
-    //   screen: 'Posts Screen',
-    //   params: {email: email,password: password,}   
-    // }
     
     setState(initialState);
   }

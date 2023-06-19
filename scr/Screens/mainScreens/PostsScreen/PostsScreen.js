@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { createStackNavigator } from '@react-navigation/stack';
 
 import DefaultScreenPosts from "../../nestedScreens/DefaultScreen/DefaultScreen";
@@ -7,8 +7,7 @@ import CommentsScreen from "../../nestedScreens/CommentsScreen/CommentsScreen";
 
 const NestedScreen = createStackNavigator();
 
-const PostsScreen = ({ navigation, route }) => {
-
+const PostsScreen = () => {
   return (
     <View style={styles.containerPost}>
     <NestedScreen.Navigator>

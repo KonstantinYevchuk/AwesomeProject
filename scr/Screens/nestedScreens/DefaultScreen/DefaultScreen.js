@@ -6,8 +6,6 @@ import { db } from "../../../firebase/config";
 import {
   collection,
   onSnapshot,
-  query,
-  where,
 } from "firebase/firestore";
 import { FontAwesome } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -51,7 +49,7 @@ const DefaultScreenPosts = ({ route, navigation }) => {
             <View style={styles.commentsLocation}>
             <TouchableOpacity 
             style={styles.comments} 
-            onPress={() => navigation.navigate("Comments")}
+            onPress={() => navigation.navigate("Comments", {postId: item.id})}
             >
             <FontAwesome name="comment-o" size={24} color="black" />
             </TouchableOpacity>

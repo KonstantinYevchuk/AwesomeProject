@@ -1,0 +1,7 @@
+{
+    "build": {
+      "your-build-profile": {
+        "releaseChannel": "my-awasome-project"
+      }
+    }
+  }
